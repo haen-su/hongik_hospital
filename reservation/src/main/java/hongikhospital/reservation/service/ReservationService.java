@@ -5,6 +5,7 @@ import hongikhospital.reservation.domain.Patient;
 import hongikhospital.reservation.domain.Reservation;
 import hongikhospital.reservation.repository.DoctorRepository;
 import hongikhospital.reservation.repository.PatientRepository;
+import hongikhospital.reservation.repository.ReservationRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,12 +23,7 @@ public class ReservationService {
     private final DoctorRepository doctorRepository;
 
     @Transactional
-    public Long reserve(Long patientId, Long hospitalId, String departmentName, Long doctorId, String date) {
-        Patient patient = patientRepository.findOne(patientId);
-        Doctor doctor = doctorRepository.findOne(hospitalId, departmentName, doctorId);
-
-        Reservation reservation = Reservation.createReservation(patient, doctor, date);
-
+    public Long reserve(Reservation reservation) {
         reservationRepository.save(reservation);
         return reservation.getId();
     }
@@ -36,6 +32,10 @@ public class ReservationService {
     public void cancelReservation(Long reservationId) {
         Reservation reservation = reservationRepository.findOne(reservationId);
         reservation.cancel();
+    }
+
+    public Reservation findOne(Long reservationId) {
+        return reservationRepository.findOne(reservationId);
     }
 
     //==예약 목록 조회 for 환자==//
@@ -64,6 +64,11 @@ public class ReservationService {
         return findReservations;
     }
 
+    //==예약 취소==//
+    public void reservationCancel(Long reservationId) {
+        Reservation reservation = reservationRepository.findOne(reservationId);
+        reservation.cancel();
+    }
 
 }
 

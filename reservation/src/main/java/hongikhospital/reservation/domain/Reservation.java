@@ -42,6 +42,7 @@ public class Reservation {
     // 예약 취소
     public void cancel() {
         this.setStatus(ReservationStatus.CANCEL);
+        this.setReserveDate(null);
     }
 
 }

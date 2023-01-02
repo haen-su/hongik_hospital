@@ -1,4 +1,4 @@
-package hongikhospital.reservation.service;
+package hongikhospital.reservation.repository;
 
 import hongikhospital.reservation.domain.Reservation;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +22,8 @@ public class ReservationRepository {
     }
 
     public List<Reservation> findAll() {
-        return em.createQuery("select r from Reservation r", Reservation.class).getResultList();
+        return em.createQuery("select r from Reservation r", Reservation.class)
+                .getResultList();
     }
 
 }

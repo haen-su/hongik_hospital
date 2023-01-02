@@ -18,8 +18,7 @@ public class DepartmentService {
     private final DepartmentRepository departmentRepository;
     private final HospitalRepository hospitalRepository;
 
-    public void saveDepartment(Hospital hospital, Department department) {
-        department.setHospital(hospital);
+    public void saveDepartment(Department department) {
         departmentRepository.save(department);
     }
 

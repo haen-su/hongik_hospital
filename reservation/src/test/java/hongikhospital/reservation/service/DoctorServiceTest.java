@@ -39,10 +39,11 @@ public class DoctorServiceTest {
 
         Doctor doctor = new Doctor();
         doctor.setName("김현수");
-        doctorService.saveDoctor(department, doctor);
+        doctor.setDepartment(department);
+        doctorService.saveDoctor(doctor);
 
         //when
-        Doctor findDoctor = doctorService.findOne(hospitalId, department.getName(), doctor.getId());
+        Doctor findDoctor = doctorService.findOne(doctor.getId());
 
         // then
         assertThat(doctor).isEqualTo(findDoctor);

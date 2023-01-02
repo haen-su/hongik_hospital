@@ -28,16 +28,20 @@ public class DoctorRepository {
                 .getResultList();
     }
 
-    public Doctor findOne(Long hospitalId, String departmentName, Long doctorId) {
-        String query = "select dr from Doctor dr join dr.department de where de.hospital.id = :hospitalId and de.name = :departmentName " +
-                "and dr.id = :doctorId";
-
-        return em.createQuery(query, Doctor.class)
-                .setParameter("hospitalId", hospitalId)
-                .setParameter("departmentName", departmentName)
-                .setParameter("doctorId", doctorId)
-                .getSingleResult();
+    public Doctor findOne(Long doctorId) {
+        return em.find(Doctor.class, doctorId);
     }
+
+//    public Doctor findOne(Long hospitalId, String departmentName, Long doctorId) {
+//        String query = "select dr from Doctor dr join dr.department de where de.hospital.id = :hospitalId and de.name = :departmentName " +
+//                "and dr.id = :doctorId";
+//
+//        return em.createQuery(query, Doctor.class)
+//                .setParameter("hospitalId", hospitalId)
+//                .setParameter("departmentName", departmentName)
+//                .setParameter("doctorId", doctorId)
+//                .getSingleResult();
+//    }
 
     public List<Doctor> findByName(Long hospitalId, String departmentName, String doctorName) {
         String query = "select dr from Doctor dr join dr.department de where de.hospital.id = :hospitalId and de.name = :departmentName " +

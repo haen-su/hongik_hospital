@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter @Setter
@@ -23,9 +23,20 @@ public class Treatment {
     @JoinColumn(name = "doctor_id")
     private Doctor doctor;
 
-    private Date treatDate;
+    private LocalDateTime treatDate;
 
     private int fee;
+
+    //==생성 메서드==//
+    public static Treatment createTreatment(Patient patient, Doctor doctor, LocalDateTime date, int fee) {
+        Treatment treatment = new Treatment();
+        treatment.setPatient(patient);
+        treatment.setDoctor(doctor);
+        treatment.setTreatDate(date);
+        treatment.setFee(fee);
+
+        return treatment;
+    }
 
 
 }

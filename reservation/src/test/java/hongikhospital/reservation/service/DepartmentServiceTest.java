@@ -1,5 +1,6 @@
 package hongikhospital.reservation.service;
 
+import hongikhospital.reservation.domain.Address;
 import hongikhospital.reservation.domain.Department;
 import hongikhospital.reservation.domain.Hospital;
 import hongikhospital.reservation.repository.DepartmentRepository;
@@ -34,12 +35,10 @@ public class DepartmentServiceTest {
         em.persist(hospital);
         Long hospitalId = hospital.getId();
 
-        Department department = new Department();
-        department.setName("외과");
-        departmentService.saveDepartment(hospital, department);
+        Department department = createDepartment("외과", hospital, null);
+        departmentService.saveDepartment(department);
 
         //when
-
         Department findDepartment = departmentService.findOne(hospitalId, "외과");
 
         // then
@@ -56,13 +55,11 @@ public class DepartmentServiceTest {
         em.persist(hospital);
         Long hospitalId = hospital.getId();
 
-        Department department1 = new Department();
-        department1.setName("외과");
-        departmentService.saveDepartment(hospital, department1);
+        Department department1 = createDepartment("외과", hospital, null);
+        departmentService.saveDepartment(department1);
 
-        Department department2 = new Department();
-        department2.setName("정신과");
-        departmentService.saveDepartment(hospital, department2);
+        Department department2 = createDepartment("정신과", hospital, null);
+        departmentService.saveDepartment(department2);
 
         //when
         List<Department> departments = departmentService.findDepartments(hospitalId);
@@ -71,5 +68,22 @@ public class DepartmentServiceTest {
         assertThat(departments.size()).isEqualTo(2);
         for(Department department : departments)
             System.out.println(department.getHospital().getName() + ", " + department.getName());
+    }
+
+    public Hospital createHospital(String name, String city, String street, String zipcode) {
+        Hospital hospital = new Hospital();
+        hospital.setName(name);
+        hospital.setAddress(new Address(city, street, zipcode));
+
+        return hospital;
+    }
+
+    public Department createDepartment(String name, Hospital hospital, String tel) {
+        Department department = new Department();
+        department.setName(name);
+        department.setHospital(hospital);
+        department.setTel(tel);
+
+        return department;
     }
 }

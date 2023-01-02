@@ -18,13 +18,12 @@ public class DoctorService {
     private final DoctorRepository doctorRepository;
     private final DepartmentRepository departmentRepository;
 
-    public void saveDoctor(Department department, Doctor doctor) {
-        doctor.setDepartment(department);
+    public void saveDoctor(Doctor doctor) {
         doctorRepository.save(doctor);
     }
 
-    public Doctor findOne(Long hospitalId, String departmentName, Long doctorId) {
-        return doctorRepository.findOne(hospitalId, departmentName, doctorId);
+    public Doctor findOne(Long doctorId) {
+        return doctorRepository.findOne(doctorId);
     }
 
     public List<Doctor> findDoctors(Long hospitalId, String departmentName) {
